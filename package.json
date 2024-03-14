@@ -4,8 +4,9 @@
   "description": "Find the most used cookie within a csv file",
   "main": "index.js",
   "scripts": {
-    "start": "npm run start",
-    "test": "npm run test"
+    "start": "node index.js -f ./sample/cookie_log.csv -d 2018-12-09",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/ehsangazar/most-active-cookie/issues"
   },
-  "homepage": "https://github.com/ehsangazar/most-active-cookie#readme"
+  "homepage": "https://github.com/ehsangazar/most-active-cookie#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
