@@ -1,5 +1,3 @@
-# most-active-cookie
-
 # Most Active Cookie
 
 This is a repository of a nodejs project to find the most used Cookie
@@ -49,17 +47,21 @@ find the most active cookie on a specific date.
 
 ## Solution
 
-The app has two parts
+The app has three parts
 
-- 1. Arguement parser in order to understand the command lines
-- 2. processLogFile which is read the CSV file
-- 3. cookieCounter which is for counting cookie usage on the date/dates
+1. parseArgs: Arguement parser in order to understand the command lines
+2. processLogFile: which is read the CSV file
+3. singletonDateCookie: which is for counting cookie usage on the date,
+   please consider that this will parse the cookies line by line and it updates the same instance.
 
 ## Future Considerations
 
 - if we wanted to not provide exactDate as part of the command, or if we wanted to have multiple dates selected
+  (Easy to change, we just need to remove the condition of exactDate and write a different function)
 - if we had more than one .csv files
+  (Easy again, as it's singleton, we can have more than one files and combine their results)
 - If cookie format changed, it should be easy to change the cookies
+  (Easy again, cookieParser just needs to be updated)
 
 ## How to use it?
 
