@@ -62,3 +62,13 @@ Make sure you have node installed and and your version is >= v20.11.1
 ```
 ./node -f cookie_log.csv -d 2018-12-09
 ```
+
+## How to run the tests?
+
+In order to run the tests you need to install and run the npm tests
+
+```
+pnpm install
+pnpm test:watch // watch tests
+pnpm test // run tests once
+```
