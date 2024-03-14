@@ -17,4 +17,22 @@ describe("app", () => {
       "Please provide a date using -d flag"
     );
   });
+
+  it("should return 'Please provide a filename with .csv extension' when filename does not have .csv extension", () => {
+    const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+    process.argv = ["", "", "-f", "filename", "-d", "date"];
+    app();
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Please provide a filename with .csv extension"
+    );
+  });
+
+  it("should return 'Please provide a date in the format YYYY-MM-DD' when date is not in the format YYYY-MM-DD", () => {
+    const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+    process.argv = ["", "", "-f", "filename.csv", "-d", "date"];
+    app();
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Please provide a date in the format YYYY-MM-DD"
+    );
+  });
 });

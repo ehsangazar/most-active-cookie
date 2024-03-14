@@ -55,6 +55,12 @@ The app has two parts
 - 2. processLogFile which is read the CSV file
 - 3. cookieCounter which is for counting cookie usage on the date/dates
 
+## Future Considerations
+
+- if we wanted to not provide exactDate as part of the command, or if we wanted to have multiple dates selected
+- if we had more than one .csv files
+- If cookie format changed, it should be easy to change the cookies
+
 ## How to use it?
 
 Make sure you have node installed and and your version is >= v20.11.1

@@ -6,6 +6,25 @@ const singletonDateCookieCounter = () => {
 
   const createInstance = () => {
     return {
+      cookieParser(cookieLine) {
+        const cookie = cookieLine.split(",")[0];
+        const date = cookieLine.split(",")[1].split("T")[0];
+
+        if (
+          !cookie.match(/^[a-zA-Z0-9]+$/) ||
+          !date.match(/^\d{4}-\d{2}-\d{2}$/)
+        ) {
+          return {
+            cookie: null,
+            date: null,
+          };
+        }
+
+        return {
+          cookie: cookieLine.split(",")[0],
+          date: cookieLine.split(",")[1].split("T")[0],
+        };
+      },
       findCookieIndex(date, cookie) {
         return dateCookieCounts[date].findIndex(
           (cookieData) => cookieData.cookie === cookie
@@ -19,24 +38,37 @@ const singletonDateCookieCounter = () => {
           },
         ];
       },
+      pushToCookieCount(date, cookie) {
+        dateCookieCounts[date].push({
+          cookie,
+          count: 1,
+        });
+      },
       swapIfPreviousCookieCountIsLess(date, cookieIndex) {
-        if (
-          dateCookieCounts[date][cookieIndex - 1] &&
-          dateCookieCounts[date][cookieIndex].count >
-            dateCookieCounts[date][cookieIndex - 1].count
+        let previousIndex = cookieIndex - 1;
+        while (
+          previousIndex > 0 &&
+          dateCookieCounts[date][previousIndex].count >
+            dateCookieCounts[date][cookieIndex].count
         ) {
-          [
-            dateCookieCounts[date][cookieIndex],
-            dateCookieCounts[date][cookieIndex - 1],
-          ] = [
-            dateCookieCounts[date][cookieIndex - 1],
-            dateCookieCounts[date][cookieIndex],
-          ];
+          const temp = dateCookieCounts[date][cookieIndex];
+          dateCookieCounts[date][cookieIndex] =
+            dateCookieCounts[date][cookieIndex - 1];
+          dateCookieCounts[date][cookieIndex - 1] = temp;
+
+          previousIndex -= 1;
         }
       },
-      addCookieLine(cookieLine) {
-        const date = cookieLine.split(",")[1].split("T")[0];
-        const cookie = cookieLine.split(",")[0];
+      addCookieLine(cookieLine, exactDate) {
+        const { cookie, date } = this.cookieParser(cookieLine);
+
+        if (!cookie || !date) {
+          return;
+        }
+
+        if (exactDate && date !== exactDate) {
+          return;
+        }
 
         if (!dateCookieCounts[date]) {
           this.setDateCookieCountToOne(date, cookie);
@@ -44,7 +76,7 @@ const singletonDateCookieCounter = () => {
           const cookieIndex = this.findCookieIndex(date, cookie);
 
           if (cookieIndex === -1) {
-            this.setDateCookieCountToOne(date, cookie);
+            this.pushToCookieCount(date, cookie);
           } else {
             dateCookieCounts[date][cookieIndex].count += 1;
             this.swapIfPreviousCookieCountIsLess(date, cookieIndex);
@@ -54,6 +86,20 @@ const singletonDateCookieCounter = () => {
       },
       getAllResultForSpecificDate(exactDate) {
         return dateCookieCounts[exactDate] || null;
+      },
+      getMostUsedCookieForSpecificDate(exactDate) {
+        const result = this.getAllResultForSpecificDate(exactDate);
+        const mostUsedCookie = [];
+        if (result) {
+          const maxCount = result[0].count;
+          result.forEach((cookieData) => {
+            if (cookieData.count === maxCount) {
+              mostUsedCookie.push(cookieData.cookie);
+            }
+          });
+        }
+
+        return mostUsedCookie;
       },
       clearInstance() {
         dateCookieCounts = {};

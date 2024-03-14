@@ -1,7 +1,7 @@
 const parseArgs = require("./utils/parseArgs");
 const processLogFile = require("./utils/processLogFile");
 
-const app = () => {
+const app = async () => {
   const { filename, date } = parseArgs(process.argv);
 
   if (!filename) {
@@ -14,7 +14,17 @@ const app = () => {
     return;
   }
 
-  processLogFile(filename, date);
+  if (!filename.match(/\.csv$/)) {
+    console.log("Please provide a filename with .csv extension");
+    return;
+  }
+
+  if (!date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+    console.log("Please provide a date in the format YYYY-MM-DD");
+    return;
+  }
+
+  await processLogFile(filename, date);
 };
 
 app();
