@@ -1,6 +1,6 @@
 const parseArgs = (args) => {
   const parsedArgs = {};
-  const slicedArgs = process.argv.slice(2);
+  const slicedArgs = args.slice(2);
 
   for (let i = 0; i < slicedArgs.length; i++) {
     if (slicedArgs[i] === "-f") {

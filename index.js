@@ -14,7 +14,7 @@ const app = () => {
     return;
   }
 
-  //   processLogFile(filename, date);
+  processLogFile(filename, date);
 };
 
 app();
