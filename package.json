@@ -1,0 +1,25 @@
+{
+  "name": "most-active-cookie",
+  "version": "1.0.0",
+  "description": "Find the most used cookie within a csv file",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start",
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehsangazar/most-active-cookie.git"
+  },
+  "keywords": [
+    "mostused",
+    "cookie",
+    "parser"
+  ],
+  "author": "Ehsan Gazar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ehsangazar/most-active-cookie/issues"
+  },
+  "homepage": "https://github.com/ehsangazar/most-active-cookie#readme"
+}
